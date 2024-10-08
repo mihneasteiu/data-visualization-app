@@ -10,8 +10,8 @@ import { histEntry } from "./Select";
  * setHistory: function to add new history entry to history array
  */
 interface SelectInputProps {
-  history: Array<histEntry>;
-  setHistory: Dispatch<SetStateAction<Array<histEntry>>>;
+  history: string;
+  setHistory: Dispatch<SetStateAction<string>>;
 }
 
 export function SelectInput(props: SelectInputProps) {
@@ -23,10 +23,8 @@ export function SelectInput(props: SelectInputProps) {
    */
 
   function handleSubmit(text: string) {
-    let newEntry: histEntry = {
-      data: text,
-    };
-    props.setHistory([...props.history, newEntry]);
+    let newEntry=text;
+    props.setHistory(newEntry);
   }
 
   return (
@@ -37,9 +35,8 @@ export function SelectInput(props: SelectInputProps) {
         id="dropdown"
         aria-label="dropdown"
       >
-        <option>Nim Telson</option>
-        <option>Goberto Ronzales</option>
-        <option>Zegan Mheng</option>
+        <option>matrixA</option>
+        <option>matrixB</option>
         {/* TODO 1: add more options to the dropdown here */}
       </select>
       {/* TODO 2: add a button here to display the current dropdown option as text

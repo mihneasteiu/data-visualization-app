@@ -1,6 +1,6 @@
 import "../../styles/main.css";
 import { histEntry } from "./Select";
-
+import {getTable} from "../../mockedData"
 /**
  * A interface for the props that are passed into SelectHistory.
  *
@@ -9,7 +9,7 @@ import { histEntry } from "./Select";
  *  outputted to the end-user in the main output area
  */
 interface SelectHistoryProps {
-  history: Array<histEntry>;
+  history: string;
 }
 
 /**
@@ -20,14 +20,14 @@ interface SelectHistoryProps {
  * @returns JSX that will print a tabular view of the passed in data
  */
 export function SelectHistory(props: SelectHistoryProps) {
+  const key= props.history;
+  const table = getTable(key);
   return (
     <div className="select-history" aria-label="select history">
       {/* TODO 2: add to the JSX to display your text in the main output area!  */}
-      {props.history.map((entry, index) => (
-        <div key={index}>
-          <p>{entry.data}</p>
+        <div>
+          {table}
         </div>
-      ))}
     </div>
   );
 }
