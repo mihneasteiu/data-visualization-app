@@ -22,12 +22,23 @@ interface SelectHistoryProps {
 export function SelectHistory(props: SelectHistoryProps) {
   const key= props.history;
   const table = getTable(key);
+  if (!table) {
+    // If table is undefined or null, render a message or empty state
+    return <div>No data available for the selected history.</div>;
+  }
   return (
     <div className="select-history" aria-label="select history">
-      {/* TODO 2: add to the JSX to display your text in the main output area!  */}
-        <div>
-          {table}
-        </div>
+      <div>
+        {table.map((row, rowIndex) => (
+          <div key={rowIndex}>
+            {row.map((value, colIndex) => (
+              <span key={colIndex} style={{ marginRight: "10px" }}>
+                {value}
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

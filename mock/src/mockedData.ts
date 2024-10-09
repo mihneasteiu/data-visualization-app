@@ -3,12 +3,12 @@
 const map = new Map<string, number[][]>();
 
 // Adding key-value pairs
-map.set("matrixA", [
+map.set("tableA", [
   [1, 2, 3],
   [4, 5, 6],
 ]);
 
-map.set("matrixB", [
+map.set("tableB", [
   [7, 8],
   [9, 10],
   [11, 12],

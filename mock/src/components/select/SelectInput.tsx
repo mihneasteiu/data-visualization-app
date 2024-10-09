@@ -35,8 +35,9 @@ export function SelectInput(props: SelectInputProps) {
         id="dropdown"
         aria-label="dropdown"
       >
-        <option>matrixA</option>
-        <option>matrixB</option>
+        <option>tableA</option>
+        <option>tableB</option>
+        <option>tableC</option>
         {/* TODO 1: add more options to the dropdown here */}
       </select>
       {/* TODO 2: add a button here to display the current dropdown option as text
