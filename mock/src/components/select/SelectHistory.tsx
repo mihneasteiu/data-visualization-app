@@ -27,18 +27,23 @@ export function SelectHistory(props: SelectHistoryProps) {
     return <div>No data available for the selected history.</div>;
   }
   return (
-    <div className="select-history" aria-label="select history">
-      <div>
-        {table.map((row, rowIndex) => (
-          <div key={rowIndex}>
-            {row.map((value, colIndex) => (
-              <span key={colIndex} style={{ marginRight: "10px" }}>
-                {value}
-              </span>
+    <table border= {1} style={{ borderCollapse: 'collapse', width: '100%' }}>
+      <thead>
+        <tr>
+          {table[0].map((header, index) => (
+            <th key={index}>{header}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {table.slice(1).map((row, rowIndex) => (
+          <tr key={rowIndex}>
+            {row.map((cell, cellIndex) => (
+              <td key={cellIndex}>{cell}</td>
             ))}
-          </div>
+          </tr>
         ))}
-      </div>
-    </div>
+      </tbody>
+    </table>
   );
 }
