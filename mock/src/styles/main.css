@@ -1,5 +1,9 @@
 /* CSS for Main Select interface */
-
+@media screen and (max-width: 360px) {
+.table{
+  max-width: 360px;
+}
+}
 .select {
   position: relative;
   min-height: 95vh;
@@ -28,3 +32,4 @@
     flex-direction: column;
     justify-content: center;
   }
+  

@@ -27,7 +27,7 @@ export function SelectHistory(props: SelectHistoryProps) {
     return <div>No data available for the selected history.</div>;
   }
   return (
-    <div style={{ maxHeight: '400px', overflowY: 'auto', width: '80%', margin: 'auto' , overflowX: 'auto'}}>
+    <div className="table" style={{ maxHeight: '400px', overflowY: 'auto', width: '80%', margin: 'auto' , overflowX: 'auto'}}>
       <table border={1} style={{ borderCollapse: 'collapse', width: '100%' }}>
         <thead>
           <tr>
