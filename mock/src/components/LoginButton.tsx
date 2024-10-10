@@ -58,6 +58,7 @@ export function LoginButton(props: loginProps) {
         <input
           type="password"
           placeholder="Enter password"
+          aria-label = "Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           style={{
