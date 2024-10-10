@@ -34,6 +34,7 @@ test("on page load, i dont see the input box until login", async ({ page }) => {
   await expect(page.getByLabel("dropdown")).not.toBeVisible();
 
   // click the login button
+  await page.getByLabel("Password").fill("SalMi");
   await page.getByLabel("Login").click();
   await expect(page.getByLabel("Sign Out")).toBeVisible();
   await expect(page.getByLabel("dropdown")).toBeVisible();
