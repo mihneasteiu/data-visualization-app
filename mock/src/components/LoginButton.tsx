@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import { useState } from "react";
 
 /**
  * An interface for logged-in state for mock.
@@ -27,23 +28,57 @@ export function LoginButton(props: loginProps) {
    *
    * @returns whether they are logged in or not
    */
-  const authenticate = () => {
+  const [password,setPassword] = useState("");
+  const login = () => {
+    if (password=="SalMi"){
+      const newValue = !props.isLoggedIn;
+      props.setIsLoggedIn(newValue);
+      return newValue;
+    }
+    const box = document.getElementsByTagName("input");
+    setPassword("");
+    box[0].setAttribute("placeholder", "Incorrect Password !!");
+  };
+  const signout = () => {
+    setPassword("")
     const newValue = !props.isLoggedIn;
     props.setIsLoggedIn(newValue);
     return newValue;
   };
 
+
   if (props.isLoggedIn) {
     return (
-      <button aria-label="Sign Out" onClick={authenticate}>
+      <button aria-label="Sign Out" onClick={signout}>
         Sign out
       </button>
     );
   } else {
     return (
-      <button aria-label="Login" onClick={authenticate}>
+      <span>
+        <input
+          type="password"
+          placeholder="Enter password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          style={{
+            borderRadius: "8px",
+            border: "1px solid transparent",
+            padding: "0.6em 1.2em",
+            fontSize: "1em",
+            fontWeight: "500",
+            fontFamily: "inherit",
+            backgroundColor: "#1a1a1a",
+            color: "white",  
+            marginRight: "10px",
+            cursor: "text", 
+            boxSizing: "border-box",
+          }}
+        />
+      <button aria-label="Login" onClick={login}>
         Login
       </button>
+      </span>
     );
   }
 }

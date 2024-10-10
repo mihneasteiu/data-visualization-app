@@ -20,7 +20,7 @@ function App({}: { children: React.ReactNode; modal: React.ReactNode }) {
   return (
     <div className="App">
       <div className="App-header">
-        <h1 aria-label="Mock Header">Mock</h1>
+        <h1 aria-label="Mock Header">Data Visualizer</h1>
         <LoginButton isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       </div>
       {isLoggedIn && <Select />}
