@@ -46,7 +46,6 @@ export function LoginButton(props: loginProps) {
     return newValue;
   };
 
-
   if (props.isLoggedIn) {
     return (
       <button aria-label="Sign Out" onClick={signout}>
