@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+//npm playwright test
 
 /**
   The general shapes of tests in Playwright Test are:

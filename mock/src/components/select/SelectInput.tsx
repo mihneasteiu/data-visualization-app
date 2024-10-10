@@ -57,7 +57,7 @@ export function SelectInput(props: SelectInputProps) {
         }}
         aria-label="submit"
       >
-        Submit
+        Retrieve Table
       </button>
     </div>
   );
