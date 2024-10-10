@@ -23,8 +23,12 @@ export function SelectHistory(props: SelectHistoryProps) {
   const key= props.history;
   const table = getTable(key);
   if (!table) {
+    // If selected is the empty one, tell user to select
+    if (props.history == ""){
+      return <div>Please choose one of the tables in the dropdown menu to display it.</div>;
+    }
     // If table is undefined or null, render a message or empty state
-    return <div>No data available for the selected history.</div>;
+    return <div>No data available for the selected table.</div>;
   }
   return (
     <div className="table" style={{ maxHeight: '400px', overflowY: 'auto', width: '80%', margin: 'auto' , overflowX: 'auto'}}>
@@ -37,7 +41,7 @@ export function SelectHistory(props: SelectHistoryProps) {
                 top: 0, 
                 backgroundColor: 'grey', 
                 zIndex: 1,
-                minWidth: '50px'
+                minWidth: '150px'
               }}>{header}</th>
             ))}
           </tr>

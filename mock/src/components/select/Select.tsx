@@ -40,7 +40,7 @@ export function Select() {
 
   return (
     <div className="min-h-[95vh] relative">
-      <div className="w-full" style={{ width: "100%" }}>
+      <div className="w-full" style={{ width: "100%"}}>
         <div className="select-container" aria-lable="Select container">
           <pre>
             <SelectHistory history={history} />

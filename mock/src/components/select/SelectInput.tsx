@@ -35,8 +35,9 @@ export function SelectInput(props: SelectInputProps) {
         id="dropdown"
         aria-label="dropdown"
       >
-        <option>Table A</option>
-        <option>Table B</option>
+        <option></option>
+        <option>Star Data</option>
+        <option>Student Records</option>
         <option>Table C</option>
         {/* TODO 1: add more options to the dropdown here */}
       </select>
@@ -55,7 +56,7 @@ export function SelectInput(props: SelectInputProps) {
             handleSubmit(selectText);
           }
         }}
-        aria-label="submit"
+        aria-label="retrieve"
       >
         Retrieve Table
       </button>
