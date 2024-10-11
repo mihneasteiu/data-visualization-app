@@ -16,15 +16,18 @@
   width: 20vw;
   margin: 10px;
   cursor: pointer;
+  
 }
 
 .dropdown > option {
   text-align: center;
 }
 
+
   .dropdown-container{
     display: flex;
     align-items: center;
     flex-direction: column;
-    justify-content: center;
+    justify-content:end;
+    margin: 10px;
   }
