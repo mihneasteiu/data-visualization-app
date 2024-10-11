@@ -35,7 +35,7 @@ export function SelectInput(props: SelectInputProps) {
         id="dropdown"
         aria-label="dropdown"
       >
-        <option></option>
+        <option>Select a file</option>
         <option>Star Data</option>
         <option>Student Records</option>
         <option>Table C</option>

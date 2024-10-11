@@ -24,14 +24,20 @@ export function SelectHistory(props: SelectHistoryProps) {
   const table = getTable(key);
   if (!table) {
     // If selected is the empty one, tell user to select
-    if (props.history == ""){
-      return <div>Please choose one of the tables in the dropdown menu to display it.</div>;
+    if (props.history == "Select a file"){
+      return (
+        <div style={{ 
+          wordWrap: 'break-word', 
+          whiteSpace: 'normal', 
+          overflowWrap: 'break-word' 
+        }}>Please choose one of the tables in the dropdown menu to display it.</div>
+      );
     }
     // If table is undefined or null, render a message or empty state
     return <div>No data available for the selected table.</div>;
   }
   return (
-    <div className="table" style={{ maxHeight: '400px', overflowY: 'auto', width: '80%', margin: 'auto' , overflowX: 'auto'}}>
+    <div className="table" style={{ overflowY: 'auto', width: '80%', margin: 'auto' , overflowX: 'auto'}}>
       <table border={1} style={{ borderCollapse: 'collapse', width: '100%' }}>
         <thead>
           <tr>

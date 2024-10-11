@@ -36,18 +36,17 @@ export interface Tab {
 export function Select() {
   // TODO 2 (Solution): set-up a React useState variable here to update the main display area once you click the submit button,
   //    then, pass this variable in as a prop to SelectHistory below and uncomment it
-  const [history, setHistory] = useState<string>("");
+  const [history, setHistory] = useState<string>("Select a file");
 
   return (
     <div className="min-h-[95vh] relative">
       <div className="w-full" style={{ width: "100%"}}>
+      <SelectInput history={history} setHistory={setHistory} />
         <div className="select-container" aria-lable="Select container">
           <pre>
             <SelectHistory history={history} />
           </pre>
         </div>
-        <hr></hr>
-        <SelectInput history={history} setHistory={setHistory} />
       </div>
     </div>
   );
