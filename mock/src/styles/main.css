@@ -1,4 +1,34 @@
 /* CSS for Main Select interface */
+@media screen and (max-width: 360px) {
+button, input{
+  font-size: 10px;
+}
+.table{
+  max-width: 360px;
+  font-size: 10px;
+  max-height: calc(100vh - 400px);
+}
+.dropdown {
+  width: 40vw;
+  margin: 10px;
+  cursor: pointer;
+}
+}
+@media screen and (min-width: 1000px) {
+  .select-container{
+    font-size: 20px; 
+  }
+  .table{
+    font-size: 25px; 
+    max-height: calc(100vh - 400px);
+  }
+  .dropdown {
+    font-size: 18px;
+    width: 20vw;
+    margin: 10px;
+    cursor: pointer;
+  }
+}
 
 .select {
   position: relative;
@@ -10,13 +40,6 @@
   margin: auto;
   display: block;
   overflow: scroll;
-}
-
-.dropdown {
-  width: 20vw;
-  margin: 10px;
-  cursor: pointer;
-  
 }
 
 .dropdown > option {
@@ -31,3 +54,4 @@
     justify-content:end;
     margin: 10px;
   }
+  
