@@ -38,7 +38,9 @@ export function SelectInput(props: SelectInputProps) {
         <option>Select a file</option>
         <option>Star Data</option>
         <option>Student Records</option>
-        <option>Table C</option>
+        <option>Nonexistent table</option>
+        <option>Empty Table</option>
+        <option>RI Income by Race</option>
         {/* TODO 1: add more options to the dropdown here */}
       </select>
       {/* TODO 2: add a button here to display the current dropdown option as text

@@ -30,7 +30,7 @@ export function LoginButton(props: loginProps) {
    */
   const [password,setPassword] = useState("");
   const login = () => {
-    if (password=="SalMi"){
+    if (password=="cs32"){
       const newValue = !props.isLoggedIn;
       props.setIsLoggedIn(newValue);
       return newValue;

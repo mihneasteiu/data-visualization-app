@@ -1,20 +1,15 @@
-/*
-  Demo: test ordinary Java/TypeScript
-*/
-
 import { expect, test } from "vitest";
 
 // all exports from main will now be available as main.X
 // import * as main from '../mock/src/main';
-import * as main from "../../src/main";
-
-test("is 1 + 1 = 2?", () => {
-  expect(1 + 1).toBe(2);
-});
+import * as mockedDData from "../../src/mockedData";
 
 // Notice how you can test vanilla TS functions using Playwright as well!
-test("main.zero() should return 0", () => {
-  expect(main.zero()).toBe(0);
+test("test getTable from mockedDData", () => {
+  expect(mockedDData.getTable("key_not_there")).toBe(undefined);
+  expect(mockedDData.getTable("Star Data")?.length).toBe(24);
+  expect(mockedDData.getTable("Student Records")?.length).toBe(14);
+  expect(mockedDData.getTable("Empty Table")?.length).toBe(1);
 });
 
 // For more information on how to make unit tests, visit:

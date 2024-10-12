@@ -25,7 +25,7 @@ test("on page load, if I log in with the wrong password, it won't authorize me",
 });
 
 test("on page load, if I log in with the right password, I will stop seeing the log in button and password box", async ({ page }) => {
-  await page.getByLabel("Password").fill("SalMi")
+  await page.getByLabel("Password").fill("cs32")
   await expect(page.getByLabel("Login")).toBeVisible();
   await expect(page.getByLabel("Password")).toBeVisible();
   await page.getByLabel("Login").click();
@@ -34,7 +34,7 @@ test("on page load, if I log in with the right password, I will stop seeing the 
 });
 
 test("on page load, if I log in with the right password, I will see the signout button, retrieve table button, and dropdown", async ({ page }) => {
-  await page.getByLabel("Password").fill("SalMi")
+  await page.getByLabel("Password").fill("cs32")
   await page.getByLabel("Login").click();
   await expect(page.getByLabel("dropdown")).toBeVisible();
   await expect(page.getByLabel("Sign out")).toBeVisible();
@@ -45,21 +45,47 @@ test("on page load, if I log in with the right password, I will see the signout 
 test("after I click the retrieve table button, i see the selected table in the output area", async ({
   page,
 }) => {
-  await page.getByLabel("Password").fill("SalMi")
+  await page.getByLabel("Password").fill("cs32")
   await page.getByLabel("Login").click();
   await expect(page.getByText("Please choose one of the tables in the dropdown menu to display it.")).toBeVisible();
+
   await page.getByLabel("dropdown").selectOption("Star Data");
   await page.getByLabel("retrieve").click();
   await expect(page.getByText("Andreas")).toBeVisible();
   await expect(page.getByText("StarID")).toBeVisible();
   await expect(page.getByText("-169.738")).toBeVisible();
+
   await page.getByLabel("dropdown").selectOption("Student Records");
   await page.getByLabel("retrieve").click();
   await expect(page.getByText("Andreas")).not.toBeVisible();
   await expect(page.getByText("Name")).toBeVisible();
   await expect(page.getByText("Student_13")).toBeVisible();
   await expect(page.getByText("Computer Science")).toBeVisible();
-  await page.getByLabel("dropdown").selectOption("Table C");
+
+  await page.getByLabel("dropdown").selectOption("Nonexistent table");
   await page.getByLabel("retrieve").click();
   await expect(page.getByText("No data available for the selected table.")).toBeVisible();
+  await expect(page.getByText("Name")).not.toBeVisible();
+  await expect(page.getByText("Student_13")).not.toBeVisible();
+
+  await page.getByLabel("dropdown").selectOption("Select a file");
+  await page.getByLabel("retrieve").click();
+  await expect(page.getByText("Please choose one of the tables in the dropdown menu to display it.")).toBeVisible();
 });
+
+test("if I select multiple datasets, the one I selected beofre pressing the button is displayed", async ({ page }) => {
+  await page.getByLabel("Password").fill("cs32")
+  await page.getByLabel("Login").click();
+
+  await page.getByLabel("dropdown").selectOption("Star Data");
+  await page.getByLabel("dropdown").selectOption("Nonexistent table");
+  await page.getByLabel("dropdown").selectOption("Student Records");
+  await page.getByLabel("retrieve").click();
+  await expect(page.getByText("Andreas")).not.toBeVisible();
+  await expect(page.getByText("Name")).toBeVisible();
+  await expect(page.getByText("Student_13")).toBeVisible();
+  await expect(page.getByText("Computer Science")).toBeVisible();
+
+});
+
+
