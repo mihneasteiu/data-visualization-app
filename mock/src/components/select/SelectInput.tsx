@@ -12,6 +12,8 @@ import { histEntry } from "./Select";
 interface SelectInputProps {
   history: string;
   setHistory: Dispatch<SetStateAction<string>>;
+  mode: string;
+  setMode: Dispatch<SetStateAction<string>>;
 }
 
 export function SelectInput(props: SelectInputProps) {
@@ -22,9 +24,11 @@ export function SelectInput(props: SelectInputProps) {
    * @param file the file selected by the user
    */
 
-  function handleSubmit(text: string) {
+  function handleSubmit(text: string, mode: string) {
     let newEntry=text;
+    let newMode=mode;
     props.setHistory(newEntry);
+    props.setMode(newMode);
   }
 
   return (
@@ -41,26 +45,37 @@ export function SelectInput(props: SelectInputProps) {
         <option>Nonexistent table</option>
         <option>Empty Table</option>
         <option>RI Income by Race</option>
-        {/* TODO 1: add more options to the dropdown here */}
       </select>
-      {/* TODO 2: add a button here to display the current dropdown option as text
-            on the main output area
-            (Hint: use the setHistory useState set function) 
-        */}
+      <select
+        className="dropdown"
+        name="dropdownVisOption"
+        id="dropdownVisOption"
+        aria-label="dropdown"
+      >
+        <option>Select display mode</option>
+        <option>Table</option>
+        <option>Bar Data</option>
+      </select>
+
       <button
         onClick={() => {
           const selectElement = document.getElementById(
             "dropdown"
           ) as HTMLSelectElement | null;
+          const selectMode = document.getElementById(
+            "dropdownVisOption"
+          ) as HTMLSelectElement | null;
           const selectText =
             selectElement?.options[selectElement.selectedIndex]?.text;
-          if (selectText != null) {
-            handleSubmit(selectText);
+          const selectDisplay =
+            selectMode?.options[selectMode.selectedIndex]?.text;
+          if (selectText != null && selectDisplay != null) {
+            handleSubmit(selectText, selectDisplay);
           }
         }}
         aria-label="retrieve"
       >
-        Retrieve Table
+        Retrieve
       </button>
     </div>
   );

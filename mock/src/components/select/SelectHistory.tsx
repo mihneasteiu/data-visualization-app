@@ -10,6 +10,7 @@ import {getTable} from "../../mockedData"
  */
 interface SelectHistoryProps {
   history: string;
+  mode: string
 }
 
 /**
@@ -21,6 +22,7 @@ interface SelectHistoryProps {
  */
 export function SelectHistory(props: SelectHistoryProps) {
   const key= props.history;
+  const mode=props.mode;
   const table = getTable(key);
   if (!table) {
     // If selected is the empty one, tell user to select
@@ -35,6 +37,17 @@ export function SelectHistory(props: SelectHistoryProps) {
     }
     // If table is undefined or null, render a message or empty state
     return <div>No data available for the selected table.</div>;
+  }
+  if (mode == "Select display mode") {
+    return (
+      <div style={{
+          wordWrap: 'break-word',
+          whiteSpace: 'normal',
+          overflowWrap: 'break-word'
+        }}>
+        Please choose a display mode.
+      </div>
+    );
   }
   return (
     <div className="table" style={{ overflowY: 'auto', width: '80%', margin: 'auto' , overflowX: 'auto'}}>
