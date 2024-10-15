@@ -16,6 +16,15 @@ interface SelectHistoryProps {
   mode: string
 }
 
+function generateRandomRGBA(): string {
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+  const a = Math.random().toFixed(2); // Alpha between 0.00 and 1.00
+
+  return `rgba(${r}, ${g}, ${b}, ${a})`;
+}
+
 /**
  * Builds a SelectHistory component that displays the output area according
  *  to any commands inputted by the user.
@@ -82,37 +91,32 @@ export function SelectHistory(props: SelectHistoryProps) {
       </div>
     );
   }
-  console.log("please see me");
     const labels = table.slice(1).map(row => row[0]);
     const headers = table[0].slice(1);
-    const datasets = headers.map((header, colIndex) => {
+    const invalidHeaders: string[] = [];
+    let datasets = headers.map((header, colIndex) => {
       // Extract the data for this specific column (skip the first row, which is the header)
       const data = table
         .slice(1)
-        .map((row) => parseFloat(row[colIndex + 1])); // Use colIndex + 1 to skip the first column (State)
+        .map((row) => parseFloat(row[colIndex + 1])); // Use colIndex + 1 to skip the first column (State)\
 
+      if (data.some((value) => isNaN(value))){
+        invalidHeaders.push(header);
+      }
       // Assign each dataset a unique color and label based on the header
-      const backgroundColors = [
-        "rgba(75, 192, 192, 0.6)",
-        "rgba(153, 102, 255, 0.6)",
-        "rgba(255, 159, 64, 0.6)",
-        "rgba(54, 162, 235, 0.6)",
-      ];
-      const borderColors = [
-        "rgba(75, 192, 192, 1)",
-        "rgba(153, 102, 255, 1)",
-        "rgba(255, 159, 64, 1)",
-        "rgba(54, 162, 235, 1)",
-      ];
+      const color = generateRandomRGBA();
 
       return {
         label: header,
         data: data,
-        backgroundColor: backgroundColors[colIndex % backgroundColors.length], // Use modulo to cycle through colors
-        borderColor: borderColors[colIndex % borderColors.length],
-        borderWidth: 1,
+        backgroundColor: color, // Use modulo to cycle through colors
+        borderColor: color,
+        borderWidth: 1
       };
     });
+    datasets = datasets.filter((dataset) =>
+      !dataset.data.some((value) => isNaN(value))
+    );
     const data = {
       labels,
       datasets
@@ -123,9 +127,22 @@ export function SelectHistory(props: SelectHistoryProps) {
         display: true,
    	},
     },}
+    let message = <div></div>;
+    if (invalidHeaders.length === 0) {
+      message = <div>All headers are valid!</div>;
+    } else {
+      message = (
+        <div>
+          Couldn't parse the following headers: {invalidHeaders.join(", ")}
+        </div>
+      );
+    }
+    // If there is invalid data, show a message instead of the chart
+    
 
     return (
       <div>
+        {message}
         <Bar options={options} data={data} />
     </div>
     );
