@@ -1,6 +1,9 @@
 import "../../styles/main.css";
 import { histEntry } from "./Select";
 import {getTable} from "../../mockedData"
+import { Bar } from "react-chartjs-2";
+import "chart.js/auto";
+
 /**
  * A interface for the props that are passed into SelectHistory.
  *
@@ -49,32 +52,82 @@ export function SelectHistory(props: SelectHistoryProps) {
       </div>
     );
   }
-  return (
-    <div className="table" style={{ overflowY: 'auto', width: '80%', margin: 'auto' , overflowX: 'auto'}}>
-      <table border={1} style={{ borderCollapse: 'collapse', width: '100%' }}>
-        <thead>
-          <tr>
-            {table[0].map((header, index) => (
-              <th key={index} style={{ 
-                position: 'sticky', 
-                top: 0, 
-                backgroundColor: 'grey', 
-                zIndex: 1,
-                minWidth: '150px'
-              }}>{header}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {table.slice(1).map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {row.map((cell, cellIndex) => (
-                <td key={cellIndex}>{cell}</td>
+  if (mode == "Table"){
+    return (
+      <div className="table" style={{ overflowY: 'auto', width: '80%', margin: 'auto' , overflowX: 'auto'}}>
+        <table border={1} style={{ borderCollapse: 'collapse', width: '100%' }}>
+          <thead>
+            <tr>
+              {table[0].map((header, index) => (
+                <th key={index} style={{ 
+                  position: 'sticky', 
+                  top: 0, 
+                  backgroundColor: 'grey', 
+                  zIndex: 1,
+                  minWidth: '150px'
+                }}>{header}</th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {table.slice(1).map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {row.map((cell, cellIndex) => (
+                  <td key={cellIndex}>{cell}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+  console.log("please see me");
+    const labels = table.slice(1).map(row => row[0]);
+    const headers = table[0].slice(1);
+    const datasets = headers.map((header, colIndex) => {
+      // Extract the data for this specific column (skip the first row, which is the header)
+      const data = table
+        .slice(1)
+        .map((row) => parseFloat(row[colIndex + 1])); // Use colIndex + 1 to skip the first column (State)
+
+      // Assign each dataset a unique color and label based on the header
+      const backgroundColors = [
+        "rgba(75, 192, 192, 0.6)",
+        "rgba(153, 102, 255, 0.6)",
+        "rgba(255, 159, 64, 0.6)",
+        "rgba(54, 162, 235, 0.6)",
+      ];
+      const borderColors = [
+        "rgba(75, 192, 192, 1)",
+        "rgba(153, 102, 255, 1)",
+        "rgba(255, 159, 64, 1)",
+        "rgba(54, 162, 235, 1)",
+      ];
+
+      return {
+        label: header,
+        data: data,
+        backgroundColor: backgroundColors[colIndex % backgroundColors.length], // Use modulo to cycle through colors
+        borderColor: borderColors[colIndex % borderColors.length],
+        borderWidth: 1,
+      };
+    });
+    const data = {
+      labels,
+      datasets
+    }
+    const options={
+    plugins: {
+      legend: {
+        display: true,
+   	},
+    },}
+
+    return (
+      <div>
+        <Bar options={options} data={data} />
     </div>
-  );
+    );
+
 }
