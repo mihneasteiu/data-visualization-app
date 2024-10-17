@@ -13,6 +13,11 @@ button, input{
   margin: 10px;
   cursor: pointer;
 }
+.dropdownVisOption {
+  width: 40vw;
+  margin: 10px;
+  cursor: pointer;
+}
 }
 @media screen and (min-width: 1000px) {
   .select-container{
@@ -23,6 +28,12 @@ button, input{
     max-height: calc(100vh - 400px);
   }
   .dropdown {
+    font-size: 18px;
+    width: 20vw;
+    margin: 10px;
+    cursor: pointer;
+  }
+  .dropdownVisOption {
     font-size: 18px;
     width: 20vw;
     margin: 10px;
@@ -46,6 +57,9 @@ button, input{
   text-align: center;
 }
 
+.dropdownVisOption > option {
+  text-align: center;
+}
 
   .dropdown-container{
     display: flex;

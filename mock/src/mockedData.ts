@@ -30,6 +30,13 @@ map.set("Star Data", [
   ["22", "Paul", "145.72842", "0.17838", "-169.738"]
 ]);
 
+map.set("just text", [
+  ["StarID", "ProperName"],
+  ["1", "Andreas"],
+  ["2", "Rory"],
+  ["3", "Mortimer"]
+]);
+
 map.set("Student Records", [
   ["Name", "Gpa", "Math", "Physics", "English", "Chemistry", "Biology", "History", "Geography", "Art", "Computer Science"],
   ["Student_1", "2.4", "72", "87", "60", "68", "75", "82", "70", "65", "78"],

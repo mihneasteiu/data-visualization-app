@@ -35,6 +35,7 @@ function generateRandomRGBA(): string {
 export function SelectHistory(props: SelectHistoryProps) {
   const key= props.history;
   const mode=props.mode;
+  let allHeadersInvalid = true;
   const table = getTable(key);
   if (!table) {
     // If selected is the empty one, tell user to select
@@ -102,6 +103,8 @@ export function SelectHistory(props: SelectHistoryProps) {
 
       if (data.some((value) => isNaN(value))){
         invalidHeaders.push(header);
+      } else {
+        allHeadersInvalid = false;
       }
       // Assign each dataset a unique color and label based on the header
       const color = generateRandomRGBA();
@@ -121,16 +124,47 @@ export function SelectHistory(props: SelectHistoryProps) {
       labels,
       datasets
     }
-    const options={
-    plugins: {
-      legend: {
-        display: true,
-   	},
-    },}
+    let options; 
+    if (mode == "Vertical Bar Chart"){
+      options = {
+        plugins: {
+          legend: {
+            display: true,
+          },
+        },
+        responsive: true,
+        scales: {
+          x: {
+            stacked: false,
+          },
+          y: {
+            stacked: false,
+          },
+        },
+      };
+    } else if (mode == "Stacked Bar Chart") {
+      options = {
+        plugins: {
+          legend: {
+            display: true,
+          },
+        },
+        responsive: true,
+        scales: {
+          x: {
+            stacked: true,
+          },
+          y: {
+            stacked: true,
+          },
+        },
+      };
+    }
+    
     let message = <div></div>;
-    if (invalidHeaders.length === 0) {
-      message = <div>All headers are valid!</div>;
-    } else {
+    if (allHeadersInvalid) {
+      message = <div>Selected dataset contains no numerical Y values.</div>;
+    } else if (invalidHeaders.length != 0){
       message = (
         <div>
           Couldn't parse the following headers: {invalidHeaders.join(", ")}
@@ -143,8 +177,7 @@ export function SelectHistory(props: SelectHistoryProps) {
     return (
       <div>
         {message}
-        <Bar options={options} data={data} />
+        {!allHeadersInvalid && <Bar options={options} data={data} />}
     </div>
     );
-
 }

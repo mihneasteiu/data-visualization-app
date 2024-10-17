@@ -45,16 +45,18 @@ export function SelectInput(props: SelectInputProps) {
         <option>Nonexistent table</option>
         <option>Empty Table</option>
         <option>RI Income by Race</option>
+        <option>just text</option>
       </select>
       <select
-        className="dropdown"
+        className="dropdownVisOption"
         name="dropdownVisOption"
         id="dropdownVisOption"
-        aria-label="dropdown"
+        aria-label="dropdownVisOption"
       >
         <option>Select display mode</option>
         <option>Table</option>
-        <option>Bar Data</option>
+        <option>Vertical Bar Chart</option>
+        <option>Stacked Bar Chart</option>
       </select>
 
       <button
