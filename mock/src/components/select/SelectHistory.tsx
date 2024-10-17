@@ -112,7 +112,7 @@ export function SelectHistory(props: SelectHistoryProps) {
       return {
         label: header,
         data: data,
-        backgroundColor: color, // Use modulo to cycle through colors
+        backgroundColor: color, 
         borderColor: color,
         borderWidth: 1
       };
@@ -170,9 +170,7 @@ export function SelectHistory(props: SelectHistoryProps) {
           Couldn't parse the following headers: {invalidHeaders.join(", ")}
         </div>
       );
-    }
-    // If there is invalid data, show a message instead of the chart
-    
+    } 
 
     return (
       <div>
