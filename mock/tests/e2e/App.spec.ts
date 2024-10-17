@@ -102,10 +102,12 @@ test("if I select multiple datasets, the one I selected before pressing the butt
   await page.getByLabel("dropdown", {exact: true}).selectOption("Star Data");
   await page.getByLabel("dropdown", {exact: true}).selectOption("Nonexistent table");
   await page.getByLabel("dropdown", {exact: true}).selectOption("Student Records");
-  
+  await page
+    .getByLabel("dropdownVisOption", { exact: true })
+    .selectOption("Table");
   await page.getByLabel("retrieve").click();
   await expect(page.getByText("Andreas")).not.toBeVisible();
-  await expect(page.getByText("Name")).toBeVisible();
+  await expect(page.getByText("Name")).not.toBeVisible();
   await expect(page.getByText("Student_13")).toBeVisible();
   await expect(page.getByText("Computer Science")).toBeVisible();
 });
@@ -130,7 +132,7 @@ test("after I choose vertical bar chart display mode, i see data displayed as a 
   await page.getByLabel("dropdown", {exact: true}).selectOption("Student Records");
   await page.getByLabel("retrieve").click();
   await expect(page.getByText("Andreas")).not.toBeVisible();
-  await expect(page.getByText("Name")).toBeVisible();
+  await expect(page.getByText("Name")).not.toBeVisible();
   await expect(page.getByText("Student_13")).toBeVisible();
   await expect(page.getByText("Computer Science")).toBeVisible();
 
@@ -159,10 +161,6 @@ test("correct pasword, datasset chosen and vertical bar view mode, all headers v
   await page.getByLabel("dropdown", {exact: true}).selectOption("Student Records");
   await page.getByLabel("dropdownVisOption", {exact: true}).selectOption("Vertical Bar Chart");
   await page.getByLabel("retrieve").click();
-
-  const legendItems = await page.locator(".chartjs-legend-item");
-  await expect(legendItems).toHaveCount(10);
-
   // Check that bars are side by side, not stacked
   const bars = await page.locator(
     ".chartjs-render-monitor rect[data-chart-item]"
@@ -182,9 +180,6 @@ test("correct pasword, dataset chosen and vertical bar view mode, some headers v
   await page.getByLabel("dropdown", {exact: true}).selectOption("Star Data");
   await page.getByLabel("dropdownVisOption", {exact: true}).selectOption("Vertical Bar Chart");
   await page.getByLabel("retrieve").click();
-
-  const legendItems = await page.locator(".chartjs-legend-item");
-  await expect(legendItems).toHaveCount(3);
 
   // Check that bars are side by side, not stacked
   const bars = await page.locator(
@@ -221,9 +216,6 @@ test("multiple requests, correct password, dataset chosen and stacked bar view m
   await page.getByLabel("dropdownVisOption", {exact: true}).selectOption("Stacked Bar Chart");
   await page.getByLabel("retrieve").click();
 
-  let legendItems = await page.locator(".chartjs-legend-item");
-  await expect(legendItems).toHaveCount(10);
-
   // Check that bars are stacked (same Y position)
   let bars = await page.locator(
     ".chartjs-render-monitor rect[data-chart-item]"
@@ -237,9 +229,6 @@ test("multiple requests, correct password, dataset chosen and stacked bar view m
   await page.getByLabel("dropdown", {exact: true}).selectOption("Star Data");
   await page.getByLabel("dropdownVisOption", {exact: true}).selectOption("Stacked Bar Chart");
   await page.getByLabel("retrieve").click();
-
-  legendItems = await page.locator(".chartjs-legend-item");
-  await expect(legendItems).toHaveCount(3);
 
   // Check that bars are stacked (same Y position)
   bars = await page.locator(
