@@ -35,7 +35,6 @@ function generateRandomRGBA(): string {
 export function SelectHistory(props: SelectHistoryProps) {
   const key= props.history;
   const mode=props.mode;
-  let allHeadersInvalid = true;
   const table = getTable(key);
   if (!table) {
     // If selected is the empty one, tell user to select
@@ -92,90 +91,127 @@ export function SelectHistory(props: SelectHistoryProps) {
       </div>
     );
   }
-    const labels = table.slice(1).map(row => row[0]);
-    const headers = table[0].slice(1);
-    const invalidHeaders: string[] = [];
-    let datasets = headers.map((header, colIndex) => {
-      // Extract the data for this specific column (skip the first row, which is the header)
-      const data = table
-        .slice(1)
-        .map((row) => parseFloat(row[colIndex + 1])); // Use colIndex + 1 to skip the first column (State)\
+const labels = table.slice(1).map(row => row[0]);
+const headers = table[0].slice(1);
+const invalidHeaders:string[] = [];
+let allHeadersInvalid = true;
+let datasets = headers.map((header, colIndex) => {
+  const data = table.slice(1).map(row => parseFloat(row[colIndex + 1]));
+  
+  if (data.some(value => isNaN(value))) {
+    invalidHeaders.push(header);
+  } else {
+    allHeadersInvalid = false;
+  }
 
-      if (data.some((value) => isNaN(value))){
-        invalidHeaders.push(header);
-      } else {
-        allHeadersInvalid = false;
-      }
-      // Assign each dataset a unique color and label based on the header
-      const color = generateRandomRGBA();
+  const color = generateRandomRGBA();
+  
+  return {
+    label: header,
+    data: data,
+    backgroundColor: color, 
+    borderColor: color,
+    borderWidth: 1
+  };
+});
 
-      return {
-        label: header,
-        data: data,
-        backgroundColor: color, 
-        borderColor: color,
-        borderWidth: 1
-      };
-    });
-    datasets = datasets.filter((dataset) =>
-      !dataset.data.some((value) => isNaN(value))
-    );
-    const data = {
-      labels,
-      datasets
-    }
-    let options; 
-    if (mode == "Vertical Bar Chart"){
-      options = {
-        plugins: {
-          legend: {
-            display: true,
-          },
-        },
-        responsive: true,
-        scales: {
-          x: {
-            stacked: false,
-          },
-          y: {
-            stacked: false,
-          },
-        },
-      };
-    } else if (mode == "Stacked Bar Chart") {
-      options = {
-        plugins: {
-          legend: {
-            display: true,
-          },
-        },
-        responsive: true,
-        scales: {
-          x: {
-            stacked: true,
-          },
-          y: {
-            stacked: true,
-          },
-        },
-      };
-    }
-    
-    let message = <div></div>;
-    if (allHeadersInvalid) {
-      message = <div>Selected dataset contains no numerical Y values.</div>;
-    } else if (invalidHeaders.length != 0){
-      message = (
-        <div>
-          Couldn't parse the following headers: {invalidHeaders.join(", ")}
-        </div>
-      );
-    } 
+datasets = datasets.filter(dataset => !dataset.data.some(value => isNaN(value)));
 
-    return (
-      <div>
-        {message}
-        {!allHeadersInvalid && <Bar options={options} data={data} />}
+const data = {
+  labels,
+  datasets
+};
+
+let options;
+if (mode === "Vertical Bar Chart") {
+  options = {
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          font: {
+            size: 10 // Smaller font for legends
+          }
+        }
+      },
+    },
+    responsive: true,
+    maintainAspectRatio: false, // Allows height to grow with container
+    scales: {
+      x: {
+        stacked: false,
+        beginAtZero: true,
+        ticks: {
+          maxRotation: 90,
+          minRotation: 90
+        },
+        grid: {
+          display: false,
+        },
+        // Enable scrolling on the x-axis
+        min: 0,
+        
+      },
+      y: {
+        stacked: false,
+        beginAtZero: true,
+        ticks: {
+          stepSize: 10 // Customize this for a larger y-axis
+        }
+      },
+    },
+  };
+} else if (mode === "Stacked Bar Chart") {
+  options = {
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          font: {
+            size: 10 // Smaller font for legends
+          }
+        }
+      },
+    },
+    responsive: true,
+    maintainAspectRatio: false, // Allows height to grow with container
+    scales: {
+      x: {
+        stacked: true,
+        beginAtZero: true,
+        grid: {
+          display: false,
+        },
+        // Enable scrolling on the x-axis
+        min: 0,
+      },
+      y: {
+        stacked: true,
+        beginAtZero: true,
+        ticks: {
+          stepSize: 10 // Customize this for a larger y-axis
+        }
+      },
+    },
+  };
+}
+
+let message = <div></div>;
+if (allHeadersInvalid) {
+  message = <div>Selected dataset contains no numerical Y values.</div>;
+} else if (invalidHeaders.length !== 0) {
+  message = (
+    <div>
+      Couldn't parse the following headers: {invalidHeaders.join(", ")}
     </div>
-    );
+  );
+}
+
+return (
+  <div style={{ height: '100vh', width: '100%', overflowX: 'scroll' }}> {/* Enable horizontal scrolling */}
+    {message}
+    {!allHeadersInvalid && <Bar options={options} data={data} />}
+  </div>
+);
+
 }

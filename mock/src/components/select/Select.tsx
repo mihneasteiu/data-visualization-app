@@ -44,9 +44,7 @@ export function Select() {
       <div className="w-full" style={{ width: "100%"}}>
       <SelectInput history={history} setHistory={setHistory}  mode={mode} setMode={setMode}/>
         <div className="select-container" aria-lable="Select container">
-          <pre>
             <SelectHistory history={history} mode={mode}/>
-          </pre>
         </div>
       </div>
     </div>
