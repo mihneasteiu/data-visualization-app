@@ -106,6 +106,8 @@ test("if I select multiple datasets, the one I selected before pressing the butt
     .getByLabel("dropdownVisOption", { exact: true })
     .selectOption("Table");
   await page.getByLabel("retrieve").click();
+  let canvas = page.getByRole("img");
+  await expect(canvas).not.toBeVisible();
   await expect(page.getByText("Andreas")).not.toBeVisible();
   await expect(page.getByText("Name")).toBeVisible();
   await expect(page.getByText("Student_13")).toBeVisible();
@@ -128,17 +130,23 @@ test("after I choose vertical bar chart display mode, i see data displayed as a 
   await page.getByLabel("retrieve").click();
   await expect(page.getByText("Andreas")).not.toBeVisible();
   await expect(page.getByText("StarID")).not.toBeVisible();
+  let canvas = page.getByRole("img");
+  await expect(canvas).toBeVisible();
 
   await page.getByLabel("dropdown", {exact: true}).selectOption("Student Records");
   await page.getByLabel("retrieve").click();
   await expect(page.getByText("Student_13")).not.toBeVisible();
   await expect(page.getByText("Computer Science")).not.toBeVisible();
+  canvas = page.getByRole("img"); // This targets the <canvas>
+  await expect(canvas).toBeVisible();
 
   await page.getByLabel("dropdown", {exact: true}).selectOption("Nonexistent table");
   await page.getByLabel("retrieve").click();
   await expect(
     page.getByText("No data available for the selected table.")
   ).toBeVisible();
+  canvas = page.getByRole("img");
+  await expect(canvas).not.toBeVisible();
 
   await page.getByLabel("dropdown", {exact: true}).selectOption("Select a file");
   await page.getByLabel("retrieve").click();
@@ -147,6 +155,8 @@ test("after I choose vertical bar chart display mode, i see data displayed as a 
       "Please choose one of the tables in the dropdown menu to display it."
     )
   ).toBeVisible();
+  canvas = page.getByRole("img");
+  await expect(canvas).not.toBeVisible();
 });
 
 test("correct pasword, datasset chosen and vertical bar view mode, all headers valid", async ({
@@ -159,6 +169,8 @@ test("correct pasword, datasset chosen and vertical bar view mode, all headers v
   await page.getByLabel("retrieve").click();
   await expect(page.getByText("72")).not.toBeVisible();
   await expect(page.getByText("Student_13")).not.toBeVisible();
+  let canvas = page.getByRole("img");
+  await expect(canvas).toBeVisible();
 });
 
 test("correct pasword, dataset chosen and vertical bar view mode, some headers valid", async ({
@@ -169,6 +181,8 @@ test("correct pasword, dataset chosen and vertical bar view mode, some headers v
   await page.getByLabel("dropdown", {exact: true}).selectOption("Star Data");
   await page.getByLabel("dropdownVisOption", {exact: true}).selectOption("Vertical Bar Chart");
   await page.getByLabel("retrieve").click();
+  let canvas = page.getByRole("img");
+  await expect(canvas).toBeVisible();
 
   await expect(page.getByText("Student_13")).not.toBeVisible();
   // Unparasable data message is visible
@@ -192,6 +206,8 @@ test("correct pasword, dataset chosen and vertical bar view mode, no valid heade
   await expect(
     page.getByText("Selected dataset contains no numerical Y values.")
   ).toBeVisible();
+  let canvas = page.getByRole("img");
+  await expect(canvas).not.toBeVisible();
 });
 
 test("multiple requests, correct password, dataset chosen and stacked bar view mode, all headers valid", async ({
@@ -202,12 +218,16 @@ test("multiple requests, correct password, dataset chosen and stacked bar view m
   await page.getByLabel("dropdown", {exact: true}).selectOption("Student Records");
   await page.getByLabel("dropdownVisOption", {exact: true}).selectOption("Stacked Bar Chart");
   await page.getByLabel("retrieve").click();
+  let canvas = page.getByRole("img");
+  await expect(canvas).toBeVisible();
   // data is not visible
   await expect(page.getByText("Gpa")).not.toBeVisible();
   // change to another data set
   await page.getByLabel("dropdown", {exact: true}).selectOption("Star Data");
   await page.getByLabel("dropdownVisOption", {exact: true}).selectOption("Stacked Bar Chart");
   await page.getByLabel("retrieve").click();
+  canvas = page.getByRole("img");
+  await expect(canvas).toBeVisible();
   // previous labels are not visible anymore
   await expect(page.getByText("Student_13")).not.toBeVisible();
   // new data is not 
@@ -219,6 +239,8 @@ test("multiple requests, correct password, dataset chosen and stacked bar view m
   await page.getByLabel("dropdown", {exact: true}).selectOption("Empty Table");
   await page.getByLabel("dropdownVisOption", {exact: true}).selectOption("Stacked Bar Chart");
   await page.getByLabel("retrieve").click();
+  canvas = page.getByRole("img");
+  await expect(canvas).not.toBeVisible();
   await expect(
     page.getByText("Selected dataset contains no numerical Y values.")
   ).toBeVisible();
@@ -227,4 +249,7 @@ test("multiple requests, correct password, dataset chosen and stacked bar view m
   await page.getByLabel("dropdownVisOption", {exact: true}).selectOption("Table");
   await page.getByLabel("retrieve").click();
   await expect(page.getByText("Rory")).toBeVisible();
+  canvas = page.getByRole("img");
+  await expect(canvas).not.toBeVisible();
 });
+
