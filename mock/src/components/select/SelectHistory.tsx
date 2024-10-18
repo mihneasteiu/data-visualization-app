@@ -17,13 +17,15 @@ interface SelectHistoryProps {
 }
 
 function generateRandomRGBA(): string {
-  const r = Math.floor(Math.random() * 256);
-  const g = Math.floor(Math.random() * 256);
-  const b = Math.floor(Math.random() * 256);
-  const a = Math.random().toFixed(2); // Alpha between 0.00 and 1.00
+  const r = Math.floor(128 + Math.random() * 128);
+  const g = Math.floor(128 + Math.random() * 128);
+  const b = Math.floor(128 + Math.random() * 128);
+  
+  const a = (0.7 + Math.random() * 0.3).toFixed(2); // Alpha between 0.70 and 1.00
 
   return `rgba(${r}, ${g}, ${b}, ${a})`;
 }
+
 
 /**
  * Builds a SelectHistory component that displays the output area according
